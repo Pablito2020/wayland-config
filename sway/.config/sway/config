@@ -85,6 +85,7 @@ input type:keyboard {
     bindsym $mod+Shift+f exec thunar
     bindsym $mod+f exec alacritty -e lf
     bindsym $mod+Shift+r exec killall gammastep
+    bindsym $mod+Shift+Return exec $term -e fzf_show
 
 #
 # Hardware keys:
