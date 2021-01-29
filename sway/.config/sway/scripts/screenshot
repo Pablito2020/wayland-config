@@ -1,0 +1,6 @@
+#!/bin/sh
+# Script that takes a screenshot and saves it to the pictures path
+# Dependencies: grim
+
+output=~/pictures/screenshots/screenshot_$(date +%s).png
+grim "$output" && notify-send "💻 Screenshot taken"

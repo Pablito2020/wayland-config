@@ -1,0 +1,20 @@
+#!/bin/bash
+# script for changing the keyboard layout 
+# between us colemak, us qwerty and spanish qwerty
+
+us_layout="English (US)"
+es_layout="Spanish"
+us_layout_colemak="English (Colemak)"
+current_layout=$(swaymsg -t get_inputs | grep active_layout_name | grep -v null | sort -u | cut -d '"' -f4)
+
+if [[ $us_layout == $current_layout ]];then
+    notify-send "Layout --> QWERTY, ES"
+    sway input "type:keyboard" xkb_switch_layout 2
+elif [[ $es_layout == $current_layout ]]; then
+    notify-send "Layout --> COLEMAK, US"
+    sway input "type:keyboard" xkb_switch_layout 0
+elif [[ $us_layout_colemak == $current_layout ]]; then
+    sway input "type:keyboard" xkb_switch_layout 1
+    notify-send "Layout --> QWERTY, US"
+fi
+
