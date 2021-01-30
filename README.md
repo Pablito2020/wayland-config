@@ -12,7 +12,7 @@ You should check that repo:
 ### How to install this configuration?
 This repo uses the [gnu stow](https://www.gnu.org/software/stow/) as a dependency (yeah, I know that an script that does the symlink would do the job, but working with stow is easier).
 
-For installing stow in arch linux, it is in the standard repos so:
+For arch linux based distros, stow is in the official repos:
 
         $ sudo pacman -S stow
 
@@ -22,7 +22,7 @@ Once you have stow installed, clone this repo and execute stow
         
         $ cd wayland-config
         
-        $ stow * 
+        $ rm README.md && stow -vSt ~ * 
 
 ### List of programs used for this repository and its X11 "equivalent"
 
