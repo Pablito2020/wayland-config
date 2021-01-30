@@ -18,7 +18,7 @@ For arch linux based distros, stow is in the official repos:
 
 Once you have stow installed, clone this repo and execute stow
 
-        $ git clone
+        $ git clone https://github.com/Pablito2020/wayland-config
         
         $ cd wayland-config
         
