@@ -18,3 +18,6 @@ elif [[ $us_layout_colemak == $current_layout ]]; then
     notify-send "Layout --> QWERTY, US"
 fi
 
+# Show changes in status bar
+pkill -SIGRTMIN+1 waybar
+

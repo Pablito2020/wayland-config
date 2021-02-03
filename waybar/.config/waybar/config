@@ -3,7 +3,7 @@
     "height": 32, // Waybar height
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": [ "sway/language", "pulseaudio", "backlight", "battery", "tray"],
+    "modules-right": [ "custom/spotify", "custom/keyboard-layout", "pulseaudio", "backlight", "battery", "tray"],
 
     // Modules configuration
     "sway/workspaces": {
@@ -48,10 +48,20 @@
         "on-click": "pavucontrol"
     },
 
-    "sway/language": {
+    "custom/keyboard-layout": {
+        "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
+        "interval": 30,
         "format": "{}",
-        "max-length": 50,
-        "on-click": "sway input type:keyboard xkb_switch_layout 1"
+        "signal": 1, 
+        "tooltip": false
+    },
+
+    "custom/spotify": {
+        "interval": 1,
+        "return-type": "json",
+        "exec": "~/.config/waybar/spotify",
+        "exec-if": "pgrep spotify",
+        "escape": true
     },
 
     "backlight": {
