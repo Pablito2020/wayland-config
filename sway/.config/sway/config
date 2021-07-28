@@ -10,11 +10,6 @@
     exec mako &
     exec nm-applet --indicator &
     exec udiskie &
-    exec swayidle -w \
-            timeout 500 'swaylock -f -c 000000' \
-            timeout 500 'swaymsg "output * dpms off"' \
-                    resume 'swaymsg "output * dpms on"' \
-            before-sleep 'swaylock -f -c 000000'
 
 # Force wayland (only for testing)
 # xwayland enable 
@@ -38,7 +33,8 @@
     set $menu wofi --show run
 
 # output
-    output * bg ~/pictures/wallpapers/wall_snow.jpg fill
+    output * bg ~/pictures/wallpapers/nasa.png fill
+    output HDMI-A-1 pos 0 0 res 2560x1080
 
 # input
 input type:touchpad {
@@ -77,8 +73,8 @@ input type:keyboard {
     bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
     # Apps
-    bindsym $mod+s exec spotify
-    for_window [class="Spotify"] move container to workspace number 10
+    bindsym $mod+s exec alacritty -e spt
+    # for_window [class="Spotify"] move container to workspace number 10
     bindsym $mod+b exec brave --enable-features=UseOzonePlatform --ozone-platform=wayland
     bindsym $mod+r exec gammastep -O 2400
     bindsym $mod+p exec pavucontrol
