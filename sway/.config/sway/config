@@ -30,10 +30,11 @@
 
 # variables
     set $term alacritty
-    set $menu wofi --show run
+    set $menu dmenu-wl_run
+    set $menuflags -b -i -nb \#000000 -nf \#ffffff -sb \#bababa -sf \#eeeeee -fn "iosevka Nerd Font" -sf \#007F00 -h 40
 
 # output
-    output * bg ~/pictures/wallpapers/nasa.png fill
+    output * bg ~/pictures/wallpapers/windows-11.png fill
     output HDMI-A-1 pos 0 0 res 2560x1080
 
 # input
@@ -45,20 +46,17 @@ input type:touchpad {
 input type:keyboard {
     xkb_options caps:swapescape
     xkb_capslock disabled
-    xkb_layout "us(colemak), us, es "
+    xkb_layout "us(colemak), us, es, us(colemak_dh)"
 }
 
 
 ### Key bindings
     
-    # Start a terminal
-    bindsym $mod+Return exec $term
-
     # Kill focused window
     bindsym $mod+w kill
 
     # Start your launcher
-    bindsym $mod+m exec $menu
+    bindsym $mod+m exec $menu $menuflags
 
     # languages
     bindsym $mod+i exec ~/.config/sway/scripts/keyboard
@@ -72,15 +70,36 @@ input type:keyboard {
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-    # Apps
-    bindsym $mod+s exec alacritty -e spt
-    # for_window [class="Spotify"] move container to workspace number 10
-    bindsym $mod+b exec brave --enable-features=UseOzonePlatform --ozone-platform=wayland
-    bindsym $mod+r exec gammastep -O 2400
-    bindsym $mod+p exec pavucontrol
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # password manager (pass)
+    bindsym $mod+p exec passmenu $menuflags
+
+    # spotifytui (spotify client)
+    bindsym $mod+s exec alacritty --class spotifytui -e spt
+    for_window [app_id="spotifytui"] move container to workspace number 9
+    for_window [app_id="spotifytui"] fullscreen
+    
+    # chromium (with hardware video acceleration enabled)
+    bindsym $mod+b exec firefox
+    
+    # neomutt (email client)
+    bindsym $mod+Shift+m exec alacritty --class neomutt -e neomutt
+    for_window [app_id="neomutt"] move container to workspace number 8
+    for_window [app_id="neomutt"] fullscreen
+    
+    # lf and thunar (file managers)
     bindsym $mod+Shift+f exec thunar
-    bindsym $mod+f exec alacritty -e lf
+    for_window [app_id="thunar"] move container to workspace number 3
+    bindsym $mod+f exec alacritty --class lightfile -e lf
+    for_window [app_id="lightfile"] move container to workspace number 3
+    
+    # gammastep (red filter for eyes)
+    bindsym $mod+r exec gammastep -O 2400
     bindsym $mod+Shift+r exec killall gammastep
+
+    # fuzzy finder
     bindsym $mod+Shift+Return exec $term -e fzf_show
 
 #
@@ -141,7 +160,6 @@ input type:keyboard {
     bindsym $mod+7 workspace number 7
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
 
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
@@ -153,7 +171,6 @@ input type:keyboard {
     bindsym $mod+Shift+7 move container to workspace number 7
     bindsym $mod+Shift+8 move container to workspace number 8
     bindsym $mod+Shift+9 move container to workspace number 9
-    bindsym $mod+Shift+0 move container to workspace number 10
 
 #
 # Layout stuff:
@@ -176,11 +193,11 @@ input type:keyboard {
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $mod+Shift+0 move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+y scratchpad show
 
 #
 # Set gtk theme
@@ -189,7 +206,7 @@ set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema gtk-theme 'Arc-Dark'
     gsettings set $gnome-schema icon-theme 'Arc'
-    gsettings set $gnome-schema font-name 'JetBrains Mono'
+    gsettings set $gnome-schema font-name 'iosevka Nerd Font'
 }
 
 # Status Bar:

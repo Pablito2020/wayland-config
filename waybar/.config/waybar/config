@@ -24,7 +24,7 @@
     },
 
     "battery": {
-        "format": "{capacity}% {icon}",
+        "format": "{capacity}% {icon} ",
         "format-icons": ["", "", "", "", ""]
     },
 
@@ -58,9 +58,8 @@
 
     "custom/spotify": {
         "interval": 1,
-        "return-type": "json",
         "exec": "~/.config/waybar/spotify",
-        "exec-if": "pgrep spotify",
+        "exec-if": "pgrep spt",
         "escape": true
     },
 

@@ -1,8 +1,8 @@
 * {
     border: none;
-    border-radius: 2;
-    font-family: 'JetBrains Mono', Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    border-radius: 0;
+    font-family: 'iosevka Nerd Font', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
     min-height: 0;
 }
  
