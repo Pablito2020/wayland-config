@@ -34,8 +34,14 @@
     set $menuflags -b -i -nb \#000000 -nf \#ffffff -sb \#bababa -sf \#eeeeee -fn "iosevka Nerd Font" -sf \#007F00 -h 40
 
 # output
+    set $laptop eDP-1
+    bindswitch --reload --locked lid:on output $laptop disable
+    bindswitch --reload --locked lid:off output $laptop enable
     output * bg ~/pictures/wallpapers/windows-11.png fill
-    output HDMI-A-1 pos 0 0 res 2560x1080
+    output HDMI-A-1 {
+        mode --custom 2560x1080
+        pos 0 0 
+    }
 
 # input
 input type:touchpad {
