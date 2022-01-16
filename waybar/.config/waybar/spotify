@@ -1,22 +1,8 @@
 #!/bin/sh
 
-echo " $(spt playback)"
+# Prints the current spotify song
 
-# class=$(playerctl metadata --player=spotify --format '{{lc(status)}}')
-# icon=""
-# spt playback
+if [ -n "$(spt playback)" ];then
+    echo " $(spt playback)"
+fi
 
-# if [[ $class == "playing" ]]; then
-#   info=$(playerctl metadata --player=spotify --format '{{artist}} - {{title}}')
-#   if [[ ${#info} > 40 ]]; then
-#     info=$(echo $info | cut -c1-40)"..."
-#   fi
-#   text=$info" "$icon
-# elif [[ $class == "paused" ]]; then
-#   text=$icon
-# elif [[ $class == "stopped" ]]; then
-#   text=""
-# fi
-
-# text=$info" "$icon
-# echo -e "{\"text\":\""$text"\", \"class\":\""$class"\"}"

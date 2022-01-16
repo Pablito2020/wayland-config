@@ -1,72 +1,192 @@
 {
-    "layer": "bottom", // Waybar at top layer
-    "height": 32, // Waybar height
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "height": 37, // Waybar height (to be removed for auto height)
+    "modules-left": ["sway/workspaces", "custom/media"],
     "modules-center": ["clock"],
-    "modules-right": [ "custom/spotify", "custom/keyboard-layout", "pulseaudio", "backlight", "battery", "tray"],
+    "modules-right": ["idle_inhibitor", "sway/language", "pulseaudio", "backlight", "battery", "network"],
 
     // Modules configuration
-    "sway/workspaces": {
+     "sway/workspaces": {
          "disable-scroll": false,
-         "all-outputs": false
+         "all-outputs": true,
+         "format": "{icon}",
+         "format-icons": {
+             "1": " ",
+             "2": " ",
+             "3": " ﭮ",
+             "4": " ",
+             "5": " ",
+             "6": " ",
+             "7": " ",
+             "8": " ",
+             "9": " ",
+             "10": " ",
+             "urgent": " ",
+             "focused": " ",
+             "default": " "
+         }
      },
-
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
-
+    "sway/language": {
+        "format": "{short} {variant} "
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        }
+    },
     "tray": {
         "spacing": 10
     },
-
     "clock": {
-        "format": "{:%d/%m/%y %H:%M}"
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+	"format": "{:%H:%M}  ",
+	"format-alt": "{:%A, %B %d, %Y}  "
     },
-
-    "battery": {
-        "format": "{capacity}% {icon} ",
-        "format-icons": ["", "", "", "", ""]
-    },
-
-    "battery#bat2": {
-        "bat": "BAT0"
-    },
-
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon}",
-        "format-muted": "",
-        "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-
-    "custom/keyboard-layout": {
-        "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
-        "interval": 30,
-        "format": "{}",
-        "signal": 1, 
+    "cpu": {
+        "format": "{usage}%  ",
         "tooltip": false
     },
-
-    "custom/spotify": {
-        "interval": 1,
-        "exec": "~/.config/waybar/spotify",
-        "exec-if": "pgrep spt",
-        "escape": true
+    "memory": {
+        "format": "{}%  "
     },
-
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": [" ", " ", " "]
+    },
     "backlight": {
-        "device": "intel_backlight",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", ""]
-    }
-
+        "format": "{icon} {percent}%",
+        "format-icons": [" ", " "],
+        "on-scroll-up": "light -A 1",
+        "on-scroll-down": "light -U 1"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "tooltip-format": "{timeTo}, {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "format-wifi": "直 {essid}",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr}  ",
+        "format-linked": "{ifname} (No IP)  ",
+        "format-disconnected": "睊 ",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format": "{essid} {signalStrength}%"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": "{icon} {volume}% {format_source}",
+        "format-bluetooth-muted": "   {volume}% {format_source}",
+        "format-muted": "  {format_source}",
+        "format-source": " ",
+        "format-source-muted": " ",
+        "format-icons": {
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
+            "phone": " ",
+            "portable": " ",
+            "car": " ",
+            "default": [" ", " ", " "]
+        },
+        "tooltip-format": "{desc}, {volume}%",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "on-click-middle": "pavucontrol"
+    },
+    "custom/media": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/spotify",
+        "interval": 1,
+        "exec-if": "pgrep spotifyd",
+    },
 }
+
+
+// {
+//     "position": "top", 
+//     "modules-left": ["sway/workspaces"],
+//     "modules-center": ["custom/spotify"],
+//     "modules-right": ["network", "pulseaudio", "battery", "clock"],
+//     // Modules configuration
+// 	"sway/workspaces": {
+// 		"disable-scroll": true,
+// 		"all-outputs": true,
+// 		"format": "{icon}",
+//         "format-icons": {
+//              "1": " ",
+//              "2": " ",
+//              "3": " ",
+//              "4": " ",
+//              "5": " ",
+//              "6": " ",
+//              "7": " ",
+//              "8": " ",
+//              "9": " ",
+//              "10": " ﭮ",
+//              "urgent": " ",
+//              "focused": " ",
+//              "default": " "
+//          }
+//      },
+//     "custom/spotify": {
+//     	"format": "<span font='OperatorMonoSSm Nerd Font weight=325 Italic'>{}</span>",
+//         "interval": 1,
+//         "exec-if": "pgrep spotifyd",
+//         "tooltip": false,
+//         "escape": true,
+//         "max-length": 60,
+//         "exec": "~/.config/waybar/spotify"
+//     },
+// 	"clock": {
+// 		"format": "<span foreground='#C6AAE8'> </span>{:%a %d %H:%M}",
+//         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+// 	},
+// 	"battery": {
+//         "states": {
+//             "warning": 30,
+//             "critical": 15,
+//         	},
+// 		    "format": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {capacity}%",
+// 		    "format-warning": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {capacity}%",
+// 		    "format-critical": "<span size='13000' foreground='#E38C8F'>{icon}</span> {capacity}%",
+// 		    "format-charging": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+// 		    "format-plugged": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+// 		    "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {time}",
+// 		    "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+//         	"format-icons": ["", "", "", "", ""],
+//             "tooltip-format": "{time}"
+// 	},
+// 	"network": {
+//         "format-wifi": "<span size='13000' foreground='#F2CECF'> </span>{essid}",
+//         "format-ethernet": "<span size='13000' foreground='#F2CECF'>󰤭</span> Disconnected",
+//         "format-linked": "{ifname} (No IP) ",
+//         "format-disconnected": "<span size='13000' foreground='#F2CECF'> </span>Disconnected",
+// 		"tooltip-format-wifi": "Signal Strenght: {signalStrength}%",
+// 	},
+// 	"pulseaudio": {
+// 		"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+// 		"format": "<span size='13000' foreground='#EBDDAA'>{icon}</span> {volume}%",
+//         "format-muted": "<span size='14000' foreground='#EBDDAA'></span> Muted",
+//         "format-icons": {
+//             "headphone": "",
+//             "hands-free": "",
+//             "headset": "",
+//             "phone": "",
+//             "portable": "",
+//             "car": "",
+//             "default": ["", ""]
+//         },
+//     },
+// }
