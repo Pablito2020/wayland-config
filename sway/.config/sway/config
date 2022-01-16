@@ -8,8 +8,8 @@
 
 # Autostart daemons, applets and swayidle
     exec mako &
-    exec nm-applet --indicator &
     exec udiskie &
+    exec swayidle -w timeout 100 'swaylock -f' timeout 200 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep 'swaylock -f'
 
 # Force wayland (only for testing)
 # xwayland enable 
@@ -18,7 +18,7 @@
     for_window [class=".*"] border pixel 2
     gaps inner 8
     gaps outer 0
-    default_border pixel 1
+    default_border pixel 2
     default_floating_border none
 
 # Mandatory keys
@@ -29,7 +29,7 @@
     set $right l
 
 # variables
-    set $term alacritty
+    set $term kitty
     set $menu dmenu-wl_run
     set $menuflags -b -i -nb \#000000 -nf \#ffffff -sb \#bababa -sf \#eeeeee -fn "iosevka Nerd Font" -sf \#007F00 -h 40
 
@@ -37,7 +37,7 @@
     set $laptop eDP-1
     bindswitch --reload --locked lid:on output $laptop disable
     bindswitch --reload --locked lid:off output $laptop enable
-    output * bg ~/pictures/wallpapers/windows-11.png fill
+    output * bg ~/pictures/wallpapers/pastel.jpeg fill
     output HDMI-A-1 {
         mode --custom 2560x1080
         pos 0 0 
@@ -52,7 +52,7 @@ input type:touchpad {
 input type:keyboard {
     xkb_options caps:swapescape
     xkb_capslock disabled
-    xkb_layout "us(colemak), us, es, us(colemak_dh)"
+    xkb_layout "us(colemak_dh), us, es"
 }
 
 
@@ -83,23 +83,22 @@ input type:keyboard {
     bindsym $mod+p exec passmenu $menuflags
 
     # spotifytui (spotify client)
+    # TODO: Change to kitty?
     bindsym $mod+s exec alacritty --class spotifytui -e spt
     for_window [app_id="spotifytui"] move container to workspace number 9
-    for_window [app_id="spotifytui"] fullscreen
     
-    # chromium (with hardware video acceleration enabled)
+    # browser
     bindsym $mod+b exec firefox
     
     # neomutt (email client)
+    # TODO: Change to kitty?
     bindsym $mod+Shift+m exec alacritty --class neomutt -e neomutt
     for_window [app_id="neomutt"] move container to workspace number 8
-    for_window [app_id="neomutt"] fullscreen
     
-    # lf and thunar (file managers)
+    # ranger and thunar (file managers)
+    # TODO: Change to kitty?
     bindsym $mod+Shift+f exec thunar
-    for_window [app_id="thunar"] move container to workspace number 3
-    bindsym $mod+f exec alacritty --class lightfile -e lf
-    for_window [app_id="lightfile"] move container to workspace number 3
+    bindsym $mod+f exec alacritty --class lightfile -e ranger
     
     # gammastep (red filter for eyes)
     bindsym $mod+r exec gammastep -O 2400
@@ -210,7 +209,7 @@ input type:keyboard {
 #
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-    gsettings set $gnome-schema gtk-theme 'Arc-Dark'
+    gsettings set $gnome-schema gtk-theme 'Orchis-dark'
     gsettings set $gnome-schema icon-theme 'Arc'
     gsettings set $gnome-schema font-name 'iosevka Nerd Font'
 }
